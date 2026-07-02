@@ -1,0 +1,270 @@
+{
+  "interpreted_requirement": {
+    "objective": "Find biodegradable food-container suppliers",
+    "entity_type": "supplier",
+    "hard_constraints": {
+      "locations": [
+        "Karnataka",
+        "Tamil Nadu",
+        "Kerala",
+        "Andhra Pradesh",
+        "Telangana"
+      ],
+      "certifications": [
+        "food-grade"
+      ],
+      "minimum_capacity": 10000,
+      "maximum_delivery_days": 30,
+      "product_keywords": [
+        "biodegradable",
+        "container"
+      ]
+    },
+    "preferences": {
+      "sustainable_materials": true,
+      "startup_friendly": true
+    },
+    "requested_results": 3,
+    "conflicts": [],
+    "safety_flags": []
+  },
+  "hard_constraints": {
+    "locations": [
+      "Karnataka",
+      "Tamil Nadu",
+      "Kerala",
+      "Andhra Pradesh",
+      "Telangana"
+    ],
+    "certifications": [
+      "food-grade"
+    ],
+    "minimum_capacity": 10000,
+    "maximum_delivery_days": 30,
+    "product_keywords": [
+      "biodegradable",
+      "container"
+    ]
+  },
+  "optional_preferences": {
+    "sustainable_materials": true,
+    "startup_friendly": true
+  },
+  "plan_followed": [
+    "Search suppliers by product category and location",
+    "Inspect supplier capabilities and certifications",
+    "Filter records that fail hard requirements",
+    "Rank the remaining suppliers",
+    "Validate every recommendation",
+    "Prepare the final response and outreach message"
+  ],
+  "recommended_matches": [
+    {
+      "entity_id": "SUP-018",
+      "name": "EcoServe Naturals",
+      "entity_type": "supplier",
+      "score": {
+        "components": {
+          "product_or_skill_relevance": {
+            "points": 30,
+            "max_points": 30,
+            "evidence": [
+              "Products/categories: food-grade biodegradable containers, bagasse trays, biodegradable packaging, food containers"
+            ]
+          },
+          "location_suitability": {
+            "points": 20,
+            "max_points": 20,
+            "evidence": [
+              "Locations: Karnataka, Tamil Nadu"
+            ]
+          },
+          "hard_constraint_compliance": {
+            "points": 25,
+            "max_points": 25,
+            "evidence": [
+              "All hard constraints satisfied, including food-grade, ISO-22000"
+            ]
+          },
+          "availability_capacity_delivery": {
+            "points": 15,
+            "max_points": 15,
+            "evidence": [
+              "Availability available, capacity 25000, delivery 21 days"
+            ]
+          },
+          "reputation_previous_performance": {
+            "points": 10,
+            "max_points": 10,
+            "evidence": [
+              "Rating 4.8, completed projects 42"
+            ]
+          }
+        },
+        "total": 100
+      },
+      "evidence": [
+        "Locations: Karnataka, Tamil Nadu",
+        "Certifications: food-grade, ISO-22000",
+        "Capacity: 25000 units",
+        "Delivery: 21 days",
+        "Rating: 4.8"
+      ],
+      "missing_information": [
+        "SUP-018: pricing is not available in the dataset"
+      ],
+      "risks": []
+    },
+    {
+      "entity_id": "SUP-044",
+      "name": "GreenLeaf Packworks",
+      "entity_type": "supplier",
+      "score": {
+        "components": {
+          "product_or_skill_relevance": {
+            "points": 30,
+            "max_points": 30,
+            "evidence": [
+              "Products/categories: food-grade biodegradable meal containers, compostable bowls, sustainable materials, biodegradable packaging"
+            ]
+          },
+          "location_suitability": {
+            "points": 20,
+            "max_points": 20,
+            "evidence": [
+              "Locations: Kerala, Karnataka"
+            ]
+          },
+          "hard_constraint_compliance": {
+            "points": 25,
+            "max_points": 25,
+            "evidence": [
+              "All hard constraints satisfied, including food-grade, CPCB-compostable"
+            ]
+          },
+          "availability_capacity_delivery": {
+            "points": 15,
+            "max_points": 15,
+            "evidence": [
+              "Availability available, capacity 18000, delivery 24 days"
+            ]
+          },
+          "reputation_previous_performance": {
+            "points": 10,
+            "max_points": 10,
+            "evidence": [
+              "Rating 4.6, completed projects 31"
+            ]
+          }
+        },
+        "total": 100
+      },
+      "evidence": [
+        "Locations: Kerala, Karnataka",
+        "Certifications: food-grade, CPCB-compostable",
+        "Capacity: 18000 units",
+        "Delivery: 24 days",
+        "Rating: 4.6"
+      ],
+      "missing_information": [
+        "SUP-044: pricing is not available in the dataset"
+      ],
+      "risks": [
+        "Pricing not listed"
+      ]
+    },
+    {
+      "entity_id": "SUP-071",
+      "name": "SouthBio Containers",
+      "entity_type": "supplier",
+      "score": {
+        "components": {
+          "product_or_skill_relevance": {
+            "points": 30,
+            "max_points": 30,
+            "evidence": [
+              "Products/categories: food-grade biodegradable containers, PLA lids, food containers, biodegradable packaging"
+            ]
+          },
+          "location_suitability": {
+            "points": 20,
+            "max_points": 20,
+            "evidence": [
+              "Locations: Andhra Pradesh, Telangana"
+            ]
+          },
+          "hard_constraint_compliance": {
+            "points": 25,
+            "max_points": 25,
+            "evidence": [
+              "All hard constraints satisfied, including food-grade"
+            ]
+          },
+          "availability_capacity_delivery": {
+            "points": 15,
+            "max_points": 15,
+            "evidence": [
+              "Availability available, capacity 12000, delivery 28 days"
+            ]
+          },
+          "reputation_previous_performance": {
+            "points": 8,
+            "max_points": 10,
+            "evidence": [
+              "Rating 4.4, completed projects 19"
+            ]
+          }
+        },
+        "total": 98
+      },
+      "evidence": [
+        "Locations: Andhra Pradesh, Telangana",
+        "Certifications: food-grade",
+        "Capacity: 12000 units",
+        "Delivery: 28 days",
+        "Rating: 4.4"
+      ],
+      "missing_information": [],
+      "risks": [
+        "Lower spare capacity than alternatives"
+      ]
+    }
+  ],
+  "constraints_checked": [
+    "dataset existence",
+    "entity type",
+    "hard constraints",
+    "factual support",
+    "duplicates",
+    "requested result count",
+    "score arithmetic",
+    "human approval"
+  ],
+  "missing_information": [
+    "SUP-018: pricing is not available in the dataset",
+    "SUP-044: pricing is not available in the dataset"
+  ],
+  "risks_or_uncertainties": [
+    "Pricing not listed",
+    "Lower spare capacity than alternatives"
+  ],
+  "recommended_next_action": "Send a procurement enquiry to SUP-018, SUP-044, SUP-071.",
+  "draft_outreach_message": "Subject: Procurement enquiry for Find biodegradable food-container suppliers\n\nHello, we are evaluating suppliers for Find biodegradable food-container suppliers. Please confirm certifications, available capacity, delivery timeline, pricing, and sample availability. This draft is prepared for SUP-018, SUP-044, SUP-071 and has not been sent.",
+  "validation": {
+    "is_valid": true,
+    "failures": [],
+    "checks": [
+      "dataset existence",
+      "entity type",
+      "hard constraints",
+      "factual support",
+      "duplicates",
+      "requested result count",
+      "score arithmetic",
+      "human approval"
+    ]
+  },
+  "human_approval_required": true,
+  "status": "Awaiting user approval",
+  "correction_attempts": 0
+}

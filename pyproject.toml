@@ -1,0 +1,10 @@
+[project]
+name = "suproc-agent"
+version = "0.1.0"
+description = "Local Suproc-style agentic search, matching, and verification system"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
