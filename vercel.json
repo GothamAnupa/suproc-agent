@@ -1,5 +1,7 @@
 {
-  "buildCommand": "echo 'Skipping build - this is a CLI tool'",
-  "outputDirectory": ".",
-  "env": {}
+  "functions": {
+    "api/handler.py": {
+      "runtime": "python3.12"
+    }
+  }
 }
