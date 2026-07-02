@@ -38,7 +38,7 @@ Optional model setup:
 ollama pull qwen3:4b
 ```
 
-## Run The Agent
+## Run The Agent (CLI)
 
 ```bash
 python -m src.cli "We are a sustainable food-packaging startup based in Bengaluru. We need three suppliers from South India that can provide food-grade biodegradable containers, support an initial order of 10,000 units and deliver within 30 days. Explain why each supplier is suitable, identify any missing information and prepare an outreach message."
@@ -58,6 +58,40 @@ The CLI prints structured JSON containing:
 - Draft outreach message
 - Validation status
 - Human approval status
+
+## Deploy to Vercel
+
+The project is configured for deployment on Vercel as a serverless Python application.
+
+### One-click Deploy
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/GothamAnupa/suproc-agent)
+
+Or manually:
+
+1. Connect your GitHub repository to Vercel
+2. Vercel automatically detects `vercel.json` and deploys `api/handler.py`
+3. Your API is live at `https://your-project.vercel.app/api/handler`
+
+### API Usage
+
+**Health Check (GET):**
+```bash
+curl https://your-project.vercel.app/api/handler
+```
+
+Response: `{"status": "ok"}`
+
+**Run Agent (POST):**
+```bash
+curl -X POST https://your-project.vercel.app/api/handler \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "We are a sustainable food-packaging startup based in Bengaluru. We need three suppliers from South India that can provide food-grade biodegradable containers, support an initial order of 10,000 units and deliver within 30 days."
+  }'
+```
+
+Response: Structured JSON with agent output (same as CLI output).
 
 ## Architecture
 
