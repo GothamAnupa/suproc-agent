@@ -1,5 +1,7 @@
 {
   "functions": {
-    "api/handler.py": {}
+    "api/handler.py": {
+      "runtime": "python3.12"
+    }
   }
 }
