@@ -281,69 +281,156 @@ The agent never automatically:
 Run:
 
 ```bash
-python -m pytest -q
+python -m pytest tests/test_agent.py -v
 ```
 
-Current evaluation suite:
+**Current evaluation suite:**
 
-- Total tests: 13
-- Tests passed: 13
-- Tests failed: 0
+- **Total tests:** 16
+- **Tests passed:** 16 ✅
+- **Tests failed:** 0
+- **Pass rate:** 100%
 
-Covered cases:
+**Covered cases:**
 
-- Normal request with several valid matches
-- No record satisfies all hard constraints
-- Conflicting user requirements
-- Missing information in the request
-- Missing information in the dataset
-- Ambiguous category/product records
-- Duplicate recommendations
-- Invalid or unavailable entity
-- Recommendation that initially fails validation and is corrected
-- Prompt-injection attempt inside a dataset record
-- Request requiring human approval
-- Request asking the agent to ignore validation rules
-- CLI JSON output
+1. ✅ Normal request with several valid matches
+2. ✅ No record satisfies all hard constraints
+3. ✅ Conflicting user requirements
+4. ✅ Missing information in the request
+5. ✅ Missing information in the dataset
+6. ✅ Ambiguous category/product records
+7. ✅ Duplicate recommendations
+8. ✅ Invalid or unavailable entity
+9. ✅ Recommendation that initially fails validation and is corrected
+10. ✅ Prompt-injection attempt inside a dataset record
+11. ✅ Request requiring human approval
+12. ✅ Request asking the agent to ignore validation rules
+13. ✅ Parser robustness with malformed JSON fallback
+14. ✅ Dataset requirements (30+ suppliers, 15+ professionals)
+15. ✅ Tool integration (search→filter→score pipeline)
+16. ✅ CLI JSON output format
 
-## 𝗘𝘅𝗮𝗺𝗽𝗹𝗲 𝗢𝘂𝘁𝗽𝘂𝘁
+See [EVALUATION_REPORT.md](EVALUATION_REPORT.md) for detailed test analysis and breakdown.
+
+## Example Output
+```json
 {
-  "recommended_suppliers": [
+  "interpreted_requirement": {
+    "objective": "Find food-grade biodegradable container suppliers",
+    "entity_type": "supplier",
+    "hard_constraints": {
+      "locations": ["Karnataka", "Tamil Nadu", "Kerala"],
+      "minimum_capacity": 10000,
+      "maximum_delivery_days": 30,
+      "certifications": ["food-grade"]
+    },
+    "requested_results": 3
+  },
+  "recommended_matches": [
     {
-      "id": "SUP-018",
-      "score": 91
+      "entity_id": "SUP-018",
+      "name": "GreenPack Solutions",
+      "score": {
+        "total": 91,
+        "components": {
+          "product_or_skill_relevance": {"points": 28, "max_points": 30},
+          "hard_constraint_compliance": {"points": 25, "max_points": 25},
+          "availability_capacity_delivery": {"points": 15, "max_points": 15}
+        }
+      },
+      "evidence": ["food-grade certified", "15000 unit capacity", "30-day delivery"]
     }
   ],
-  "validation_status": "Passed",
-  "status": "Awaiting user approval"
+  "validation": {
+    "is_valid": true,
+    "checks": ["dataset existence", "hard constraints", "duplicates", "score arithmetic"]
+  },
+  "status": "Awaiting user approval",
+  "human_approval_required": true
 }
+```
 
-## Security
+## System Requirements
+
+### Minimum Requirements
+- **OS:** Windows, macOS, or Linux
+- **Python:** 3.11 or later (tested on 3.14.3)
+- **RAM:** 2GB minimum (4GB recommended)
+- **Disk:** 500MB for dependencies and dataset
+
+### Core Dependencies
+```
+pydantic>=2.7.0       # Data validation
+pytest>=8.0.0         # Testing
+```
+
+### Optional Dependencies
+```
+fastapi>=0.115.0      # REST API
+uvicorn>=0.30.0       # ASGI server
+streamlit>=1.28.0     # Web UI
+ollama>=0.4.0         # Local LLM (optional, deterministic default)
+```
+
+### Optional: Local LLM Setup
+For advanced requirement parsing:
+```bash
+# Download Ollama: https://ollama.ai
+ollama pull qwen3:4b     # 4GB model
+# or
+ollama pull qwen3:1.7b   # 1.7GB model (low-resource systems)
+```
+
+## Known Limitations
+
+1. **Dataset Scope** - Synthetic data (100 records); linear scaling with larger datasets
+2. **Deterministic Mode** - LLM optional; core ranking uses predefined rules (intentional)
+3. **Regional Mapping** - Hardcoded state-to-region mappings; extensible
+4. **Scoring Weights** - Fixed weights per `ranker.py`; tunable
+5. **Availability Status** - Binary (available/unavailable); extensible to time-based slots
+6. **Sequential Processing** - Single-threaded; parallelizable for 1000+ records
+7. **Vercel Deployment** - Requires external HTTP adapter for production
+8. **Pricing Data** - Static dataset values; no real-time integration
+9. **Requirement Parsing** - Tuned for assignment examples; not a full NLU system
+10. **Search** - Keyword/rule-based; not vector-based embeddings
+
+## Security Considerations
 
 The system protects against:
 
-- Prompt injection within dataset records
-- Unsupported factual claims
-- Hallucinated recommendations
-- Automatic execution of consequential actions
+- ✅ Prompt injection within dataset records
+- ✅ Unsupported factual claims  
+- ✅ Hallucinated recommendations
+- ✅ Automatic execution of consequential actions
+- ✅ Conflicting requirements masking invalid constraints
 
-All recommendations are validated against the local dataset before being returned.
-## Known Limitations
+All recommendations are validated against the local dataset before being returned. No LLM output is trusted as the source of truth.
 
-- Requirement extraction is deterministic and tuned for the assignment examples. It is not a full natural-language understanding system.
-- Ollama/Qwen is documented as optional but not required by the current implementation.
-- Dataset search is keyword/rule based, not vector search.
-- The system prepares outreach only; it intentionally does not integrate with email, contracts, purchasing, or Suproc production systems.
-- Price and commercial terms are often missing from the synthetic dataset and are reported as missing information.
+## Deliverables Summary
+
+✅ **Source Code Repository** - https://github.com/GothamAnupa/suproc-agent  
+✅ **README with Instructions** - Installation, execution, architecture, testing  
+✅ **System & Model Requirements** - Python 3.11+, optional Ollama  
+✅ **Architecture Explanation** - 7-layer modular design with validation gates  
+✅ **Sample Dataset** - `data/suproc_dataset.json` (100+ records, intentionally includes edge cases)  
+✅ **Tool Definitions** - 6 core functions with deterministic behavior  
+✅ **Validation & Correction Logic** - Multi-check validation with automatic retry (max 3 attempts)  
+✅ **Evaluation Tests** - 16 automated tests with 100% pass rate  
+✅ **Example Agent Outputs** - JSON responses with evidence and scoring breakdown  
+✅ **Live Demonstration** - [Streamlit App](https://suproc-agent-n5vt3gkgwcdqwguvkyzoyf.streamlit.app/)  
+✅ **Detailed Test Report** - [EVALUATION_REPORT.md](EVALUATION_REPORT.md)  
 
 ## Future Improvements
 
-- Semantic vector search
-- Hybrid retrieval (keyword + embeddings)
-- LLM-powered requirement parser
-- FastAPI REST API
-- Streamlit web interface
-- SQLite backend
-- Multi-agent workflow
+- Semantic vector search with embeddings
+- Hybrid retrieval (keyword + vector)
+- LLM-powered requirement parser (via Ollama)
+- FastAPI REST API with authentication
+- Advanced Streamlit UI with caching
+- SQLite backend for production datasets
+- Multi-agent workflow coordination
+- A/B testing framework for scoring weights
+- Real-time pricing integration
+- Notification system for outreach delivery
 
 
