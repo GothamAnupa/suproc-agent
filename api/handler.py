@@ -1,39 +1,40 @@
-from http.server import BaseHTTPRequestHandler
 import json
 from app.agent import run_agent
 
 
-class handler(BaseHTTPRequestHandler):
-    def do_POST(self):
-        """Handle POST requests with a natural language query"""
-        try:
-            content_length = int(self.headers.get("content-length", 0))
-            body = self.rfile.read(content_length)
-            data = json.loads(body.decode())
-            
+def handler(request):
+    """Handle HTTP requests"""
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body.decode() if isinstance(request.body, bytes) else request.body)
             query = data.get("query", "").strip()
+            
             if not query:
-                self.send_response(400)
-                self.send_header("Content-Type", "application/json")
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": "Missing 'query' field"}).encode())
-                return
+                return {
+                    "statusCode": 400,
+                    "body": json.dumps({"error": "Missing 'query' field"}),
+                    "headers": {"Content-Type": "application/json"}
+                }
             
             response = run_agent(query)
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            self.wfile.write(json.dumps(response.model_dump(), indent=2).encode())
-            
-        except Exception as e:
-            self.send_response(500)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            self.wfile.write(json.dumps({"error": str(e)}).encode())
+            return {
+                "statusCode": 200,
+                "body": json.dumps(response.model_dump(), indent=2),
+                "headers": {"Content-Type": "application/json"}
+            }
+        
+        elif request.method == "GET":
+            return {
+                "statusCode": 200,
+                "body": json.dumps({"status": "ok"}),
+                "headers": {"Content-Type": "application/json"}
+            }
+    
+    except Exception as e:
+        return {
+            "statusCode": 500,
+            "body": json.dumps({"error": str(e)}),
+            "headers": {"Content-Type": "application/json"}
+        }
 
-    def do_GET(self):
-        """Health check endpoint"""
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json")
-        self.end_headers()
-        self.wfile.write(json.dumps({"status": "ok"}).encode())
+
