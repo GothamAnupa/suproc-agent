@@ -1,7 +1,7 @@
 # Suproc Local Agentic Search, Matching And Verification System
 
 This is a lightweight local AI-agent-style system for the Suproc final round assignment. It accepts a natural-language business request, interprets requirements, searches a synthetic Suproc-style dataset, ranks grounded recommendations, validates them deterministically, corrects invalid output, and prepares the next action without performing it automatically.
-
+ 
 ## Features
 
 - Natural language requirement understanding
